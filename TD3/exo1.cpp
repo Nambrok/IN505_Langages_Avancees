@@ -4,7 +4,7 @@ using namespace std;
 
 int main(){
   CString a("a");
-  CString b("b");
+  CString b("bien");
   cout<<a.getString()<<endl;
   cout<<b.getString()<<endl;
   if(a>b){

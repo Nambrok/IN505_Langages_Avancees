@@ -56,7 +56,6 @@ public:
     this->s = a.getString();
   }
 
-
   //Getter
   char* getString(){
     return this->s;
