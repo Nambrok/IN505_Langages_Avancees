@@ -16,7 +16,7 @@ public:
   }
 
   Vecteur(Vecteur& v){
-    this->T
+    //Réécrire tous le reste.
   }
 
   void add(int d){
