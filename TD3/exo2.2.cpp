@@ -1,28 +1,22 @@
 using namespace std;
 #include <iostream>
+#include <list>
 
 class Vecteur{
 private:
-  int* T;
-  int taille;
+  list<int> T;
 public:
   Vecteur(){
-    this->T = new int;
-    this->taille = 0;
+    T = new list();
   }
 
   Vecteur(int a){
-    this->T = new int[1];
-    this->T[0] = a;
-    this->taille = 1;
+    T = new list();
+    T.push_back(a);
   }
 
   Vecteur(Vecteur& v){
-    this->taille = v.getTaille();
-    this->T = new int[this->taille];
-    for(int i =0; i<this->taille; i++){
-      this->T[i] = v.getVal(i);
-    }
+    this->T
   }
 
   void add(int d){
@@ -38,7 +32,7 @@ public:
   }
 
   int getTaille() const{
-    return this->taille;
+    return T.size();
   }
 
   int getVal(int i) const{
@@ -104,19 +98,11 @@ public:
   }
 };
 
-// ostream& operator<<( ostream &flux, Vecteur const& v )
-// {
-//     v.afficher(flux);
-//     return flux;
-// }
-
 int main(){
   Vecteur T(10);
   Vecteur A(10);
+  T+= 13;
   T.afficher();
   A.afficher();
-  A = T+A;
-  cout<<"Test avant affichage"<<endl;
-  A.afficher();
-  cout<<"Test après"<<endl;
+
 }
