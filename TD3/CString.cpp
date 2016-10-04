@@ -10,6 +10,7 @@ private:
   static int _nbrChaines;
 
 public:
+  //Constructeur
   CString(){
     this->s = new char;
     this->s[0] = '\0';
@@ -32,7 +33,7 @@ public:
     _nbrChaines += 1;
   }
 
-
+  //Surcharge des opérateurs
   bool operator<=(CString& b){
     return infOuEgale(b);
   }
@@ -49,14 +50,14 @@ public:
     return egal(b);
   }
 
-  // CString& operator=(CString& a);
-  // CString& CString::operator=(CString& a){
   void operator=(CString &a)
   {
     this->taille = a.getTaille();
     this->s = a.getString();
   }
 
+
+  //Getter
   char* getString(){
     return this->s;
   }
@@ -67,6 +68,7 @@ public:
 
   static int nbrChaines();
 
+  //Méthodes
   CString plus(CString& c) const{
     char buf[this->taille + c.getTaille()];
     strcpy(buf, this->s);
