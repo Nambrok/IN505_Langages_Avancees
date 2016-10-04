@@ -26,6 +26,14 @@ public:
     return this->def.getString();
   }
 
+  CString getSClef(){
+    return this->clef;
+  }
+
+  CString getSDef(){
+    return this->def;
+  }
+
   void afficher(){
     cout<<this->clef.getString()<<" : "<<this->def.getString()<<endl;
   }
@@ -33,5 +41,6 @@ public:
 
 int main(){
   Definition homer("Homer", "Buveur de bière");
+  // Definition homer("Homer", "");
   homer.afficher();
 }

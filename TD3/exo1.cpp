@@ -3,5 +3,21 @@ using namespace std;
 #include "CString.cpp"
 
 int main(){
-  cout<<"Hello World"<<endl;
+  CString a("a");
+  CString b("b");
+  cout<<a.getString()<<endl;
+  cout<<b.getString()<<endl;
+  if(a>b){
+    cout<<"a>b"<<endl;
+  }
+  if(a<=b){
+    cout<<"a<=b"<<endl;
+  }
+  else{
+    cout<<"a>b"<<endl;
+  }
+  cout<<(a+b).getString()<<endl;
+  b = a;
+  cout<<b.getString()<<endl;
+
 }

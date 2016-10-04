@@ -32,6 +32,31 @@ public:
     _nbrChaines += 1;
   }
 
+
+  bool operator<=(CString& b){
+    return infOuEgale(b);
+  }
+
+  bool operator>(CString& b){
+    return plusGrandQue(b);
+  }
+
+  CString operator+(CString& b){
+    return plus(b);
+  }
+
+  bool operator==(CString& b){
+    return egal(b);
+  }
+
+  // CString& operator=(CString& a);
+  // CString& CString::operator=(CString& a){
+  void operator=(CString &a)
+  {
+    this->taille = a.getTaille();
+    this->s = a.getString();
+  }
+
   char* getString(){
     return this->s;
   }
@@ -64,6 +89,13 @@ public:
     return CString(buf);
   }
 
+  bool egal(CString& ch){
+    if(strcmp(this->s, ch.getString()) == 0){
+      return true;
+    }
+    else return false;
+  }
+
   bool plusGrandQue(CString& ch){
       if(strcmp(this->s, ch.getString())>0){
         return true;
@@ -94,7 +126,6 @@ public:
 };
 
 int CString::_nbrChaines = 0;
-
 
 int CString::nbrChaines(){
   return _nbrChaines;
