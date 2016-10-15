@@ -1,10 +1,10 @@
 using namespace std;
 #include <iostream>
-#include <list>
+
 
 class Vecteur{
 private:
-  list<int> T;
+  
 public:
   Vecteur(){
     T = new list();
@@ -16,19 +16,14 @@ public:
   }
 
   Vecteur(Vecteur& v){
-    //Réécrire tous le reste.
+    T = new list();
+    for(int i = 0; i<v.getTaille(); i++){
+      T.push_back(v.getVal(i));
+    }
   }
 
   void add(int d){
-    int* n = new int[this->taille+1];
-    int* tmp = this->T;
-    for(int i = 0; i<this->taille; i++){
-      n[i] = tmp[i];
-    }
-    n[this->taille] = d;
-    this->taille +=1;
-    this->T = n;
-    delete tmp;
+    T.push_back(d);
   }
 
   int getTaille() const{
@@ -36,7 +31,7 @@ public:
   }
 
   int getVal(int i) const{
-    return this->T[i];
+    return T.get
   }
 
   void afficher(){
