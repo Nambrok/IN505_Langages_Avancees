@@ -5,7 +5,7 @@ using namespace std;
 
 class Vecteur{
 private:
-  List l;
+  List* l;
 public:
   Vecteur(){
     l = new List();
@@ -21,20 +21,20 @@ public:
   }
 
   void add(int d){
-    l.addEnd(d);
+    l->addEnd(d);
   }
 
   int getTaille() const{
-    return l.getTaille();
+    return l->getTaille();
   }
 
   int getVal(int i) const{
-    return l[i];
+    return l->getVal(i);
   }
 
   void afficher(){
-    for(int i = 0; i<l.getTaille(); i++){
-      cout<<i<<" "<<l[i]<<endl;
+    for(int i = 0; i<l->getTaille(); i++){
+      cout<<i<<" "<<l->getVal(i)<<endl;
     }
   }
 
@@ -61,11 +61,11 @@ public:
   // }
 
   int operator[](int i) const{
-    return l[i];
+    return l->getVal(i);
   }
 
   void operator+=(int d){
-    l.addEnd(d);
+    l->addEnd(d);
   }
 
   // Vecteur& operator+(Vecteur& v){
@@ -87,9 +87,9 @@ public:
 
   // <<
   // >>
-  // ~Vecteur(){
-  //   delete *l;
-  // }
+  ~Vecteur(){
+    delete l;
+  }
 };
 
 int main(){

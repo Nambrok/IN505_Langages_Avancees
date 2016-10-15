@@ -60,6 +60,14 @@ public:
     }
   }
 
+  int getVal(int i){
+    int d = 0; Chaine* act = tete;
+    while(act->getSuiv() != NULL && d != i){
+      act = act->getSuiv();
+    }
+    return act->getVal();
+  }
+
   int operator[](int i){
     int d = 0; Chaine* act = tete;
     while(act->getSuiv() != NULL && d != i){
