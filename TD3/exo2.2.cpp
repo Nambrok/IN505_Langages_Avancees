@@ -1,72 +1,71 @@
 using namespace std;
 #include <iostream>
+#include "List.cpp"
 
 
 class Vecteur{
 private:
-  
+  List l;
 public:
   Vecteur(){
-    T = new list();
+    l = new List();
   }
 
   Vecteur(int a){
-    T = new list();
-    T.push_back(a);
+    l = new List(a);
   }
 
   Vecteur(Vecteur& v){
-    T = new list();
-    for(int i = 0; i<v.getTaille(); i++){
-      T.push_back(v.getVal(i));
-    }
+    l = new List();
+    //TODO: Ecrire cette méthode, du genre for(int i = 0; i<v.getTaille(); i++){l.addEnd(v.getVal(i));}
   }
 
   void add(int d){
-    T.push_back(d);
+    l.addEnd(d);
   }
 
   int getTaille() const{
-    return T.size();
+    return l.getTaille();
   }
 
   int getVal(int i) const{
-    return T.get
+    return l[i];
   }
 
   void afficher(){
-    for(int i = 0; i<this->taille; i++){
-      cout<<i<<" "<<T[i]<<endl;
+    for(int i = 0; i<l.getTaille(); i++){
+      cout<<i<<" "<<l[i]<<endl;
     }
   }
 
-  bool operator==(Vecteur& v){
-    if(this->taille != v.getTaille()){
-      return false;
-    }
-    for(int i = 0; i<this->taille; i++){
-      if(this->T[i]!=v.getVal(i)){
-        return false;
-      }
-    }
-    return true;
-  }
+//TODO: Réécrire ces surcharges d'opérateurs.
+  // bool operator==(Vecteur& v){
+  //   if(this->taille != v.getTaille()){
+  //     return false;
+  //   }
+  //   for(int i = 0; i<this->taille; i++){
+  //     if(this->T[i]!=v.getVal(i)){
+  //       return false;
+  //     }
+  //   }
+  //   return true;
+  // }
+  //
+  // Vecteur& operator=(const Vecteur& a){
+  //   delete[] this->T;
+  //   this->taille = a.getTaille();
+  //   this->T = new int[this->taille];
+  //   for(int i =0; i<this->taille; i++){
+  //     this->T[i] = a.getVal(i);
+  //   }
+  // }
 
-  Vecteur& operator=(const Vecteur& a){
-    delete[] this->T;
-    this->taille = a.getTaille();
-    this->T = new int[this->taille];
-    for(int i =0; i<this->taille; i++){
-      this->T[i] = a.getVal(i);
-    }
-  }
-
-  int operator[](int i){
-    return this->getVal(i);
+  int operator[](int i) const{
+    return l[i];
   }
 
   void operator+=(int d){
-    add(d);
+    l.addEnd(d);
   }
 
   // Vecteur& operator+(Vecteur& v){
@@ -88,9 +87,9 @@ public:
 
   // <<
   // >>
-  ~Vecteur(){
-    delete[] this->T;
-  }
+  // ~Vecteur(){
+  //   delete *l;
+  // }
 };
 
 int main(){

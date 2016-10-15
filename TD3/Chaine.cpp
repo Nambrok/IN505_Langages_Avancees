@@ -15,10 +15,6 @@ public:
     v = n;
   }
 
-  Chaine* getSuiv(){
-    return suiv;
-  }
-
   void setSuiv(Chaine* s){
     suiv = s;
   }
@@ -27,7 +23,7 @@ public:
     return v;
   }
 
-  ~Chaine(){
-
+  Chaine* getSuiv(){
+    return suiv;
   }
 };

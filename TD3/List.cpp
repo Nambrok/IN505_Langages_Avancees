@@ -6,7 +6,7 @@ class List{
 private:
   Chaine* tete;
   int taille;
-  
+
 public:
   List(int v){
     tete = new Chaine(v);
@@ -22,7 +22,7 @@ public:
     while(act->getSuiv() != NULL){
       act = act->getSuiv();
     }
-    act->setSuiv(new List(n));
+    act->setSuiv(new Chaine(n));
     taille++;
   }
 
@@ -30,6 +30,42 @@ public:
     Chaine* act = new Chaine(n);
     act->setSuiv(tete);
     tete = act;
+  }
+
+  int getValTete(){
+    return tete->getVal();
+  }
+
+  bool chercherVal(int n){
+    Chaine* act = tete;
+    while(act->getSuiv() != NULL && act->getVal() != n){
+      act = act->getSuiv();
+    }
+    if(act->getVal() == n){
+      return true;
+    }
+    return false;
+  }
+
+  Chaine* getChaine(int i){
+    if(i<= taille){
+      int d = 0; Chaine* act = tete;
+      while(act->getSuiv() != NULL && d != i){
+        act = act->getSuiv();
+      }
+      return act;
+    }
+    else{
+      return NULL;
+    }
+  }
+
+  int operator[](int i){
+    int d = 0; Chaine* act = tete;
+    while(act->getSuiv() != NULL && d != i){
+      act = act->getSuiv();
+    }
+    return act->getVal();
   }
 
   int getTaille(){
