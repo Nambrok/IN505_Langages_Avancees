@@ -38,27 +38,26 @@ public:
     }
   }
 
-//TODO: Réécrire ces surcharges d'opérateurs.
-  // bool operator==(Vecteur& v){
-  //   if(this->taille != v.getTaille()){
-  //     return false;
-  //   }
-  //   for(int i = 0; i<this->taille; i++){
-  //     if(this->T[i]!=v.getVal(i)){
-  //       return false;
-  //     }
-  //   }
-  //   return true;
-  // }
-  //
-  // Vecteur& operator=(const Vecteur& a){
-  //   delete[] this->T;
-  //   this->taille = a.getTaille();
-  //   this->T = new int[this->taille];
-  //   for(int i =0; i<this->taille; i++){
-  //     this->T[i] = a.getVal(i);
-  //   }
-  // }
+  bool operator==(Vecteur& v){
+    if(this->getTaille() != v.getTaille()){
+      return false;
+    }
+    for(int i = 0; i<this->getTaille(); i++){
+      if(l->getVal(i)!=v.getVal(i)){
+        return false;
+      }
+    }
+    return true;
+  }
+
+
+  Vecteur& operator=(const Vecteur& a){
+    delete l;
+    l = new List();
+    for(int i = 0; i<a.getTaille(); i++){
+      l+=a;
+    }
+  }
 
   int operator[](int i) const{
     return l->getVal(i);
