@@ -55,8 +55,9 @@ public:
     delete l;
     l = new List();
     for(int i = 0; i<a.getTaille(); i++){
-      l+=a;
+      l->addEnd(a.getVal(i));
     }
+    return l;
   }
 
   int operator[](int i) const{
@@ -91,10 +92,21 @@ public:
   }
 };
 
+ostream& operator<<(ostream& o, List& v){
+int i, tmp;
+for(i = 0; i < v.getTaille(); i++)
+{
+  tmp = v[i];
+  o<<tmp<<' ';
+}
+return o;
+}
+
 int main(){
   Vecteur T(10);
   Vecteur A(10);
   T+= 13;
+  cout<<T<<endl;
   T.afficher();
   A.afficher();
 
