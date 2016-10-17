@@ -26,6 +26,18 @@ public:
     taille = 0;
   }
 
+  void setSuiv(Dictionnaire* n){
+    suiv = n;
+  }
+
+  void addEnd(const char* clef, const char* def){
+    Dictionnaire* tmp = this;
+    while(tmp->getSuiv() != NULL){
+      tmp = tmp->getSuiv();
+    }
+    tmp->setSuiv(new Dictionnaire(clef, def));
+  }
+
   Dictionnaire* getSuiv(){
     return this->suiv;
   }
@@ -35,20 +47,36 @@ public:
   }
 
   Definition* getDef(int i){
-    Dictionnaire* tmp = this;
-    for(int i = 0; i<taille; i++){
-      tmp = tmp->getSuiv();
-    }
-    return tmp->getDef();
-  }
+    // Dictionnaire* tmp = this;
+    // if(taille == 1){
+    //   return this->getDef();
+    // }
+    // else{
+    //   for(int i = 0; i<taille; i++){
+    //     if(tmp->getSuiv() != NULL){
+    //         tmp = tmp->getSuiv();
+    //     }
+    //     else{
+    //       cerr<<"Le i spécifié est trop grand."<<endl;
+    //     }
+    //   }
+    //   return tmp->getDef();
+    // }
+  }//TODO: Réécrire cette méthode, elle fait des core dump quand on entre dans le else.
 
   void afficher(int i){
-    cout<<getDef(i)->getDef()<<endl;
+    Definition* t = getDef(i);
+    cout<<t->getClef()<<" : "<<t->getDef()<<endl;
   }
 
   void afficher(){
-    for(int i = 0; i<taille; i++){
-      afficher(i);
+    if(taille == 0){
+      cerr<<"Le Dictionnaire que vous essayer d'afficher est vide."<<endl;
+    }
+    else{
+      for(int i = 0; i<taille; i++){
+        afficher(i);
+      }
     }
   }
 
@@ -65,6 +93,8 @@ public:
 };
 
 int main(){
-  Dictionnaire d(new CString("Damien"), new CString("Nambrok"));
+  Dictionnaire d("Damien", "Nambrok");
+  d.afficher();
+  d.addEnd("Bonjour", "Connard");
   d.afficher();
 }
