@@ -1,1 +1,3 @@
 *.exe
+*.depend
+IN505/IN505.depend

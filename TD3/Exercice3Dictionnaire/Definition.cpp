@@ -10,7 +10,7 @@ private:
 public:
   Definition(const CString& _clef, const CString& _def): clef(_clef), def(_def){}
 
-  Definition(string& clef, string& def){
+  Definition(const char* clef, const char* def){
     this->clef = CString(clef);
     this->def = CString(def);
   }
