@@ -57,7 +57,7 @@ public:
     for(int i = 0; i<a.getTaille(); i++){
       l->addEnd(a.getVal(i));
     }
-    return l;
+    //return l;
   }
 
   int operator[](int i) const{
@@ -106,7 +106,7 @@ int main(){
   Vecteur T(10);
   Vecteur A(10);
   T+= 13;
-  cout<<T<<endl;
+  // cout<<T<<endl;
   T.afficher();
   A.afficher();
 
