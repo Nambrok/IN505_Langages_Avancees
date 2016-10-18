@@ -32,6 +32,10 @@ public:
     tete = act;
   }
 
+  Chaine* getTete(){
+    return tete;
+  }
+  
   int getValTete(){
     return tete->getVal();
   }

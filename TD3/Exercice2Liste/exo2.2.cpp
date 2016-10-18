@@ -78,29 +78,27 @@ public:
   //   return *n;
   // }
 
-  // void afficher(ostream &flux) const{
-  //   for(int i = 0; i<this->taille; i++){
-  //
-  //   }
-  //   flux << m_heures << "h" << m_minutes << "m" << m_secondes << "s";
-  // }
+  ostream& operator<<(ostream& o){
+    int i, tmp;
+    for(i = 0; i < l->getTaille(); i++)
+    {
+      tmp = (*l)[i];
+      o<<tmp<<' ';
+    }
+    return o;
+  }
 
-  // <<
-  // >>
+  istream& operator>>(istream& i){
+    int n;
+    i>>n;
+    l->addEnd(n);
+    return i;
+  }
+
   ~Vecteur(){
     delete l;
   }
 };
-
-ostream& operator<<(ostream& o, List& v){
-int i, tmp;
-for(i = 0; i < v.getTaille(); i++)
-{
-  tmp = v[i];
-  o<<tmp<<' ';
-}
-return o;
-}
 
 int main(){
   Vecteur T(10);
