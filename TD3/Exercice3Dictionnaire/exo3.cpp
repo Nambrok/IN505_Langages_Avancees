@@ -45,6 +45,11 @@ class Noeud{
       o<<d->getClef()<<" : "<<d->getDef()<<endl;
       return o;
     }
+
+    ~Noeud(){
+      delete d;
+      delete suiv;
+    }
 };
 
 class Dictionnaire{
@@ -77,12 +82,36 @@ public:
     taille++;
   }
 
-  void addAlpha(const char* clef, const char* def){
+  /*
+  void ajouterDef(const char* clef, const char* def){
     Noeud* act = tete;
     while(act->getSuiv() != NULL){
       act = act->getSuiv();
     }
   }//TODO: Ajout alphabétiquement par les clés des définitions.
+
+  void ajouterDef(Definition& d){
+    Noeud* nouv = new Noeud(d);
+    taille++;
+    if(tete == NULL){
+      tete = nouv;
+    }
+    else{
+      Noeud* actuel = tete;
+      Noeud* prec = tete;
+      while(actuel != NULL && nouv->getDef()->getClef().plusGrandQue(actuel->getDef()->getClef())){
+        prec = actuel;
+        actuel = actuel->getSuiv();
+      }
+      if(actuel == prec){
+        tete = nouv;
+      }
+      else{
+        prec->setSuiv(nouv);
+      }
+      nouv->setSuiv(actuel);
+    }
+  }*/
 
   Definition* getDef(int i){
     if(i>taille){
@@ -117,13 +146,7 @@ public:
   }
 
   ~Dictionnaire(){
-    Noeud* tmp = tete;
-    Noeud* act = tete;
-    for(int i = 0; i<taille; i++){
-      act = act->getSuiv();
-      delete tmp;
-      tmp = act;
-    }
+    delete tete;
   }
 };
 
@@ -131,7 +154,7 @@ int main(){
   Dictionnaire d("Damien", "Nambrok");
   d.afficherTaille();
   d.afficher();
-  d.addEnd("Bonjour", "Connard");
+  d.ajouterDef(Definition("Bonjour", "Monsieur"));
   d.afficherTaille();
   d.afficher();
 }
