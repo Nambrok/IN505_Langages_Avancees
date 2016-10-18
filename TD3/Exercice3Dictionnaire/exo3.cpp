@@ -8,9 +8,18 @@ class Noeud{
     Noeud* suiv;
 
   public:
-    Noeud(const char* clef, const char* def):d(clef, def), suiv(NULL);
-    Noeud(CString& clef, CString& def):d(clef, def), suiv(NULL);
-    Noeud(Definition& d):d(&d), suiv(NULL);
+    Noeud(const char* clef, const char* def){
+      d = new Definition(clef, def);
+      suiv = NULL;
+    }
+    Noeud(const CString& clef, const CString& def){
+      d = new Definition(clef, def);
+      suiv = NULL;
+    }
+    Noeud(Definition* _d){
+      d = _d;
+      suiv= NULL;
+    }
 
     Noeud* getSuiv(){
       return suiv;
@@ -65,6 +74,14 @@ public:
       act = act->getSuiv();
     }
     act->setSuiv(new Noeud(clef, def));
+    taille++;
+  }
+
+  void addAlpha(const char* clef, const char* def){
+    Noeud* act = tete;
+    while(act->getSuiv() != NULL){
+      act = act->getSuiv();
+    }
   }
 
   Definition* getDef(int i){
@@ -76,7 +93,7 @@ public:
     }
     else{
       Noeud* act = tete;
-      for(int j= 0; i<j; j++){
+      for(int j= 0; j<i; j++){
         act = act->getSuiv();
       }
       return act->getAtt();
@@ -84,10 +101,10 @@ public:
   }
 
   void afficher(){
-    Noeud* tmp = tete;
-    while(tmp->getSuiv() != NULL){
-      cout<<tmp;
-      tmp = tmp->getSuiv();
+    Definition* tmp;
+    for(int i = 0; i<taille; i++){
+      tmp = getDef(i);
+      cout<<tmp->getClef()<<" : "<<tmp->getDef()<<endl;
     }
   }
 
