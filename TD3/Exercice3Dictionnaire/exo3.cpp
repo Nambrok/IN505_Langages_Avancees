@@ -41,10 +41,10 @@ class Noeud{
       return d;
     }
 
-    // ostream& operator<<(ostream& o){
-    //   o<<d->getClef()<<" : "<<d->getDef()<<endl;
-    //   return o;
-    // }
+    ostream& operator<<(ostream& o){
+      o<<d->getClef()<<" : "<<d->getDef()<<endl;
+      return o;
+    }
 };
 
 class Dictionnaire{
@@ -82,7 +82,7 @@ public:
     while(act->getSuiv() != NULL){
       act = act->getSuiv();
     }
-  }
+  }//TODO: Ajout alphabétiquement par les clés des définitions.
 
   Definition* getDef(int i){
     if(i>taille){

@@ -85,6 +85,11 @@ public:
       else return s2;
   }
 
+  ostream& operator<<(ostream& o){
+    o<<s;
+    return o;
+  }
+
   ~CString(){
     // delete this->s; //Crée un problème car la chaine de caractère n'est pas dupliqué et il cherche à la delete plusieurs fois.
     //Celà crée des problèmes car on ne libère pas la mémoire que l'on a alloué dynamiquement.
