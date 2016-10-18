@@ -113,6 +113,19 @@ public:
     }
   }*/
 
+  CString recherche(const char* clef){
+    // CString c = clef;
+    CString c(clef);
+    Noeud* tmp = tete;
+    while(tmp != NULL && tmp->getDef()->getClef() <= c){ // Ne marche que si le dictionnaire est trié par ordre alphabétique.
+      if(c == tmp->getClef()){//OH t'as pas la Surcharge == dans CString.cpp, ça va pas marcher.
+        return tmp->getDef();
+      }
+      tmp = tmp->getSuiv();
+    }
+    return CString();
+  }
+
   Definition* getDef(int i){
     if(i>taille){
       cerr<<"Le i spécifié est plus grand que la taille de la liste."<<endl;
@@ -154,7 +167,7 @@ int main(){
   Dictionnaire d("Damien", "Nambrok");
   d.afficherTaille();
   d.afficher();
-  d.ajouterDef(Definition("Bonjour", "Monsieur"));
+  d.addEnd("Florian", "Chrad");
   d.afficherTaille();
   d.afficher();
 }
