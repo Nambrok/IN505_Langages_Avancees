@@ -2,89 +2,107 @@ using namespace std;
 #include <iostream>
 #include "Definition.cpp"
 
+class Noeud{
+  private:
+    Definition* d;
+    Noeud* suiv;
+
+  public:
+    Noeud(const char* clef, const char* def):d(clef, def), suiv(NULL);
+    Noeud(CString& clef, CString& def):d(clef, def), suiv(NULL);
+    Noeud(Definition& d):d(&d), suiv(NULL);
+
+    Noeud* getSuiv(){
+      return suiv;
+    }
+
+    void setSuiv(Noeud* n){
+      suiv = n;
+    }
+
+    CString getDef(){
+      return d->getDef();
+    }
+
+    CString getClef(){
+      return d->getClef();
+    }
+
+    Definition* getAtt(){
+      return d;
+    }
+
+    // ostream& operator<<(ostream& o){
+    //   o<<d->getClef()<<" : "<<d->getDef()<<endl;
+    //   return o;
+    // }
+};
+
 class Dictionnaire{
 private:
-  Definition* d;
-  Dictionnaire* suiv;
+  Noeud* tete;
   int taille;
 
 public:
   Dictionnaire(const CString& clef, const CString& def){
-    d = new Definition(clef, def);
-    suiv = NULL;
+    tete = new Noeud(clef, def);
     taille = 1;
   }
 
   Dictionnaire(const char* clef, const char* def){
-    d = new Definition(clef, def);
-    suiv = NULL;
+    tete = new Noeud(clef, def);
     taille = 1;
   }
+
   Dictionnaire(){
-    d = NULL;
-    suiv = NULL;
+    tete = NULL;
     taille = 0;
   }
 
-  void setSuiv(Dictionnaire* n){
-    suiv = n;
-  }
-
   void addEnd(const char* clef, const char* def){
-    Dictionnaire* tmp = this;
-    while(tmp->getSuiv() != NULL){
-      tmp = tmp->getSuiv();
+    Noeud* act = tete;
+    while(act->getSuiv() != NULL){
+      act = act->getSuiv();
     }
-    tmp->setSuiv(new Dictionnaire(clef, def));
-  }
-
-  Dictionnaire* getSuiv(){
-    return this->suiv;
-  }
-
-  Definition* getDef(){
-    return this->d;
+    act->setSuiv(new Noeud(clef, def));
   }
 
   Definition* getDef(int i){
-    // Dictionnaire* tmp = this;
-    // if(taille == 1){
-    //   return this->getDef();
-    // }
-    // else{
-    //   for(int i = 0; i<taille; i++){
-    //     if(tmp->getSuiv() != NULL){
-    //         tmp = tmp->getSuiv();
-    //     }
-    //     else{
-    //       cerr<<"Le i spécifié est trop grand."<<endl;
-    //     }
-    //   }
-    //   return tmp->getDef();
-    // }
-  }//TODO: Réécrire cette méthode, elle fait des core dump quand on entre dans le else.
-
-  void afficher(int i){
-    Definition* t = getDef(i);
-    cout<<t->getClef()<<" : "<<t->getDef()<<endl;
+    if(i>taille){
+      cerr<<"Le i spécifié est plus grand que la taille de la liste."<<endl;
+    }
+    else if(i<0){
+      cerr<<"Le i spécifié est plus petit que 0."<<endl;
+    }
+    else{
+      Noeud* act = tete;
+      for(int j= 0; i<j; j++){
+        act = act->getSuiv();
+      }
+      return act->getAtt();
+    }
   }
 
   void afficher(){
-    if(taille == 0){
-      cerr<<"Le Dictionnaire que vous essayer d'afficher est vide."<<endl;
-    }
-    else{
-      for(int i = 0; i<taille; i++){
-        afficher(i);
-      }
+    Noeud* tmp = tete;
+    while(tmp->getSuiv() != NULL){
+      cout<<tmp;
+      tmp = tmp->getSuiv();
     }
   }
 
+  int getTaille(){
+    return taille;
+  }
+
+  void afficherTaille(){
+    cout<<taille<<endl;
+  }
+
   ~Dictionnaire(){
-    Dictionnaire *tmp, *act;
-    act = this;
-    tmp = act;
-    while(act->getSuiv() != NULL){
+    Noeud* tmp = tete;
+    Noeud* act = tete;
+    for(int i = 0; i<taille; i++){
       act = act->getSuiv();
       delete tmp;
       tmp = act;
@@ -94,7 +112,9 @@ public:
 
 int main(){
   Dictionnaire d("Damien", "Nambrok");
+  d.afficherTaille();
   d.afficher();
   d.addEnd("Bonjour", "Connard");
+  d.afficherTaille();
   d.afficher();
 }
