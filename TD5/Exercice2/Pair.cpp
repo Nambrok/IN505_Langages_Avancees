@@ -2,6 +2,12 @@ using namespace std;
 #include <typeinfo>
 
 template<class T>
+class Pair;
+
+template<class T>
+ostream& operator<<(ostream& o, Pair<T>& p);
+
+template<class T>
 class Pair{
 private:
   T p1, p2;
@@ -31,6 +37,8 @@ public:
   ~Pair(){
     // cout<<"Destruction d'un Pair"<<endl;
   }
+
+  friend ostream& operator<< <>(ostream& o, Pair<T>& p);
 
 };
 
