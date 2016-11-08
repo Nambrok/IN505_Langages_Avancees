@@ -35,6 +35,8 @@ public:
   virtual void afficher() const;
   virtual void cloner(const Point& p);
 
+  void moveTo(int x, int y){
+
   ~Point(){
     // afficher();
     // cout<<"Appel au destructeur\n";
@@ -67,6 +69,10 @@ void Point::afficher() const{
   cout<<getX()<<"."<<getY()<<endl;
 }
 
+void Point::moveTo(int x, int y){
+  this->x = x;
+  this->y = y;
+}
 void Point::cloner(const Point& p){
   this->x = p.getX();
   this->y = p.getY();

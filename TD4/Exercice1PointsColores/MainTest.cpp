@@ -3,7 +3,7 @@ using namespace std;
 #include "PointColor.cpp"
 
 int main(int argc, char* argv[]){
-  cout<<"MainTest.cpp"<<endl;
+  cout<<"Exercice1PointsColores/MainTest.cpp | "<<argv[0]<<endl;
   Point p(10, 10);
   p.afficher();
   PointColor c(12, 11, Bleu);

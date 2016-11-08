@@ -5,7 +5,10 @@ using namespace std;
 #endif
 #include "PointColor.cpp"
 #include "Formes.cpp"
+#include "Segment.cpp"
+#include "Rectangle.cpp"
+
 int main(int argc, char* argv[]){
-  cout<<"Exercice3Formes/MainTest.cpp | "<<argv[0]<<endl;
+  cout<<"Exercice2Formes/MainTest.cpp | "<<argv[0]<<endl;
   PointColor().afficher();
 }
