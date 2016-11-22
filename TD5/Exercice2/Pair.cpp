@@ -1,5 +1,6 @@
 using namespace std;
 #include <typeinfo>
+#include <string.h>
 
 template<class T>
 class Pair;
@@ -18,11 +19,11 @@ public:
   }
 
   T getMax(){
-    if(typeid(p1) == typeid(int) || typeid(p1)==typeid(float)){
+    if(strcmp(typeid(p1), typeid(int)) || strcmp(typeid(p1), typeid(float))){
         return (p1>p2?p1:p2);
     }
     else{
-      cerr<<"Fonction non encore implémenté pour ce type"<<endl;
+      cerr<<"Fonction non encore implémenté pour ce type "<<typeid(p1).name()<<"."<<endl;
     }
   }
 

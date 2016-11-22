@@ -1,0 +1,232 @@
+
+6)Les fonctions
+
+defun : permet de définir une fonction
+
+
+>(defun mon-third(x)
+        (car(cdr(cdr x)))
+)
+MON-THIRD
+
+L'appel :
+>(mon-third '(a b c d))
+C
+
+------------------------------------------------------------------------------------------------
+
+> (> (+ 1 4) 3)
+T
+
+> (defun SommeGrand (x y z)
+        (> (+ x y) z)
+)
+SOMMEGRAND
+
+Remarque :
+Pas de distinction entre un programme, une procédure et une fonction.
+Tout est fonction en LISP.
+
+
+7)Récursivité
+
+member : permet de savoir si un objet appartient à une liste ou pas.
+
+(defun mon-member (obj lst)
+        (if (null lst)
+                nil
+                (if (eql (car lst) obj)
+                        lst
+                        (mon-member obj (car lst))
+                )
+        )
+)
+
+>(mon-member 'b '(a b c))
+(B C)
+
+>(mon-member ' z '(a b c))
+NIL
+
+
+8)Les entrées/sorties
+
+format : permet de faire une sortie. |--> 1er argument : sur quel sortie ?
+                                                |--> 2ème argument : chaîne de caractère                                                                 pour donner le format
+                                                |--> 1 ou plusieurs arguments : éléments à                                                                                         écrire
+
+
+>(format t ''~A plus ~A egale ~A. ~%'' 2 3 (+ 2 3))
+
+t : sortie standard
+~A : emplacement d'écriture
+~% : retour chariot
+
+2 plus 3 egale 5
+NIL
+
+
+read : permet de faire une entrée
+        si sans argument pour l'entrée, alors entrée standard
+
+>(defun Question (chaine)
+        (format t ''~A'' chaine)
+        (read)
+)
+QUESTION
+
+>(Question ''Quel age as-tu ?'')
+Quel age as-tu ? 30
+30
+
+
+
+
+9)Les Types
+
+→ Lisp a une approche flexible vis à vis des types
+
+→ Dans CLisp les variables n'ont pas de type, les valeurs ont un type.
+
+→ Clisp permet de déclarer quand même des types pour des raisons d'efficacité.
+
+
+
+Les types forment une hiérarchie :
+
+        27 de type  fixnum
+                        integer
+                        rationnal
+                        real
+                        number
+                        atom
+                        t ← supertype de tous les types
+
+
+(type 27 'integer)
+T
+
+
+
+10)Les variables
+
+a) Variables locales
+
+let : permet de déclarer et d'initialiser une variable locale
+
+
+>(let ((x 1) (y 2))                        }← prend une liste de couples (variable valeur)
+        (+ x y)                        }
+)                                        }contexte lexical
+3
+
+
+
+>(defun demande-nombre ()
+        (format t ''Entrer un nombre'')
+        (let (val (read)))
+                (if (numberp val)
+                        val
+                        (demande-nombre)
+                )
+        )
+)
+
+
+
+b) Variables globales
+
+defparameter : permet de déclarer et d'initialiser des variables globales
+
+>(defparameter *globe* 3)
+*GLOBE*
+
+Par convention : il y a une étoile de par et d'autre d'une variable globale.
+
+
+c) Constante
+
+defconstant : permet de définir des constantes globales
+
+>(defconstant limite (+ *globe* 1))
+4
+
+Remarque : Le prédit boundp permet de savoir si un nom est celui d'une variable ou d'une constante.
+
+>(boundp '*globe*)
+T
+
+
+
+11)L'affectation
+
+setf : c'est l'opérateur le plus commun
+
+>(setf *globe* 30)
+30
+
+>(let ((n 10))
+        (setf n 2)
+        n
+)
+
+>(setf m (list 'a 'b 'c))                → m devient une variable globale car pas encore (A B C)                                                                                        déclarée
+
+
+
+>(setf (car m) 'n)
+N
+
+> m
+(N B C)
+
+>(setf a 3                 (setf a 3)
+           b 100        (setf b 100)
+          c 30                (setf c 30)
+)
+
+
+
+12)La programmation fonction
+
+PF (programmation fonctionnel) = programme qui renvoit des valeurs au lieu de modifier des éléments.
+
+Ex : fonction remove
+
+>(setf lst '(c a r a t))
+(C A R A T)
+
+>(remove 'a lst)
+(C R T)
+
+>lst
+(C A R A T)
+
+
+PF => éviter le setf et les fonctions similaires
+
+Avantage : test interactif
+
+
+13)Fonctions comme des objets
+
+Dans Lisp, les fonctions sont objets réguliers comme les symboles, les chaînes de caractères ou les listes.
+
+function : opérateur comme 'quote', suivi d'un nom de fonction. Il renvoi l'objet associé.
+
+>(function +)
+#<compiled-Function + 17BA4E>
+
+>#'+
+#<compiled-Function + 17BA4E>
+
+Remarque : comme tout objet, on peut passer les fonctions comme argument.
+
+Exemples
+>(apply #'+ '(1 2 3))        =>        >(+ 1 2 3)
+6                                        6
+
+>(apply #'+ 1 2 '(3 4 5))
+
+>(funcall #'+ 1 2 3)
+6

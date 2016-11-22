@@ -1,0 +1,190 @@
+Remarque : "defun" crée 1 fonction et lui donne un nom mais les fonctions n'ont pas besoin de defun pour être définies.
+
+Un fonction est une expression lambda
+
+Une expression lambda est une liste qui contient : le symbole lambda + liste de paramètres + corps (ens d'instructions) avec zéro
+ou plusieurs expressions.
+
+>(lambda (x) (+ x 100))
+
+>(defun add(x) (+ x 100))
+
+>((x) (+ x 100))
+
+
+>((lambda (x) (+ x 100)
+  )
+  1
+ )
+équivalent
+>(funcall #' (lambda (x) (+ x 100) ) 1 )
+
+	Chapitre III: Les structures de contrôle:
+Les structures de contrôles orientent le cours que l'évaluation va suivre à travers le texte du programme.
+
+feuilles -> fonctions
+branches -> structures de contrôle
+
+1) Les blocs : 
+	3 opérateurs de base pour créer des blocs de code
+
+progn 	block	tagbody
+
+a) progn : les expressions à l'intérieur du bloc sont éaluées dans l'ordre et la valeur de la dernière est renvoyée
+	>(progn (format t "a")
+		(format t "b")
+		(+ 11 12)
+	)
+	ab
+	23
+
+b) block : Similaire au progn, mais avec un nom et une sortie de secours
+		- 1ier argument - nom du bloc
+		- arrêt à n'importe quell étape de l'évaluation et renvoie immédiatement avec return from nomdubloc
+
+	>(block tete
+		(format t "Here we go")
+		(return-from tete 'idea)
+		(format t "On ne verra jamais cela")
+	)
+	Here we go
+	IDEA
+
+return : macro qui renvoie son argument si le bloc porte le nom 'nil'
+	>(block nil
+		(return 27)
+	)
+	27
+
+>(dolist (x '(a b c d e))
+	(format t "~A" x)
+	(if (eql x 'c)
+	    (return 'done)
+	)
+)
+A B C
+DONE
+
+Remarque:
+	Les corps d'une fonction définie avec defun est aussi implicitement inclus dans un bloc dont le nom est celui de la fonction.
+
+	(defun foo()
+		(return-from foo 27)
+	)
+
+c) tagbody: 
+	- utilisation de goto
+	- les atomes dans le corps sont considéres comme des labels.
+
+	>(tagbody
+		(setf x 0)
+		top
+		(setf x (+ x 1))
+		(format t "~A" x)
+		(if (< x 10) (go top))
+	)
+	0 1 2 3 4 5 6 7 8 9 10
+
+Remarque : Quand on utilise des blocs
+	- On utilise presque tout le temps 'progn'
+	- On utilise block si on  veut utiliser une sortie soudaine.
+	- On utilise jamais tagbody expliciement.
+
+2) Contexte lexical :
+
+>(let ((x 7) (y 2)) (format t "nombre") (+ x y))
+équivalent
+>((lambda (x y) (format t "nombre") (+ x y))
+7
+
+Le 'let' est équivalent à un appel de fonction.
+
+>(let ((x 2)
+	(y (+ x 1)))
+	(+ x y)
+)
+Probleme!!
+
+((lambda (x y)
+	(+ x y)
+ )
+ 2
+ (+ x 1)
+) 
+On ne peut pas créer des variables let qui dépendent d'autres variables créées avec le même let.
+
+>(ket ((x 1))
+	(let ((y (+ x 1)))
+		(+ x y)
+	)
+)
+
+
+3) Les structures conditionnelles:
+
+a) when :
+	- composée d'une expression et d'1 corps
+	- Le corps est évaluée si l'expression est vraie
+
+>(when (oddp cela)
+	(format t "cela est impair")
+	(+ cela 1)
+)
+
+(if (oddp cela)
+    (progn (format t "Cela est impair") (+ cela 1)))
+
+b) unless : 
+	- contraire de when
+	- le corps est évalué si l'expression est fausse
+
+ cond : 
+C'est la mère des structures conditionnelles
+-elle permet de multiple condition
+- le corps associé à chaque condition à un progn implicite
+- permet de remplacer les 'if' imbriqués
+
+(defun mon-member (obj lst)
+	(if (null lst)
+		nil
+		(if (eql (car lst) obj)
+			lst
+			(mon-member obj (cdr lst))
+		)
+	)
+)
+équivalent
+(defun mon-member (obj lst)
+	(cond ((null lst) nil)
+		((eql (car lst) obj) lst)
+		(t (mon-member obj (cdr lst)))
+)
+
+Remarque : 
+	Dans commonLisp
+	Cette forme sera probablement implémentée (traduite) sous forme de if imbriqués
+
+Forme générale du 'cond':
+	(cond (condition0 expression0*)
+		(""1 ""1*)
+		(conditionn expressionn*)
+	)
+Si pas d'expression après la condition, la valeur renvoyée est la condition 
+>(cond (99))
+99
+
+
+d) case :
+permet de comparer une valeur à plusieurs constantes
+
+(defun month-length(mois)
+	(case mois
+		((jan mars mai jul aout oct dec) 31)
+		((avr jun sept nov) 30)
+		(fev if(leap-year) 29 28)
+		(otherwise "mois introuvable")
+	)
+otherwise équivalent à t
+
+e) typecase :
+macro similaire à case, mais pour comparer avec des types.
