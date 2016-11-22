@@ -1,8 +1,4 @@
-(format t "exo2.lisp")
-(defun Question (chaine)
-        (format t "~A" chaine)
-        (read)
-)
+(format t "exo2.lisp, bibliothéque par Damien T.")
 ;Exercice 2
 ;Erreur (defun carre(x) (if(< 5 x) (return-from carre (* x x))))
 (defun carre(x) (if (and (integerp x) (<= x 5) (> x 0))(format t "Pas de calcule") (* x x)))
@@ -19,4 +15,46 @@
                           )
                     )
                     )
+;Correction min-max
+;(defun min-max(list)
+;  (if (or (not (listp list)) (null list))
+;    nil
+;    (let ((min (car list)) (max (car list)))
+;    (dolist (tmp (cdr list))
+;      (if (> tmp max)
+;      (setf max tmp))
+;      (if (< tmp min)
+;      (setf min tmp))
+;    )
+;    (format t "~A ~A" min max)
+;    )))
 ;Exercice 5
+(defun maxi(lst)
+  (let ((max1 (car lst)) (max2 (car lst)))
+        (progn
+          (dolist (x lst)
+            (if (> x max1)
+              (setf max1 x)
+            )
+          )
+          (dolist (x lst)
+            (if (and (< x max1) (> x max2))
+              (setf max2 x)
+            )
+          )
+          (* max1 max2)
+        )
+  )
+)
+
+;Exercice 6
+(defun rever(lst)
+  (let (tmp)
+    (progn
+      (dolist (x lst)
+        (setf tmp (cons x tmp))
+        )
+        tmp
+    )
+  )
+)
