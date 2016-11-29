@@ -28,6 +28,7 @@
 ;    )
 ;    (format t "~A ~A" min max)
 ;    )))
+
 ;Exercice 5
 (defun maxi(lst)
   (let ((max1 (car lst)) (max2 (car lst)))
@@ -46,6 +47,13 @@
         )
   )
 )
+(defun maxi(lst)
+(if(or(not(listp lst) (null lst))
+nil
+(let((min (car lst) (max (car lst)))
+(dolist (tmp (cdr lst)
+(if(> tmp max) (setf max tmp))(if(and(> tmp min) (< tmp max)) (setf min tmp)))
+(* min max)))))))
 
 ;Exercice 6
 (defun rever(lst)
@@ -58,3 +66,51 @@
     )
   )
 )
+
+;Exercice 1 Récursive
+(defun diffUnRec(lst)
+  (if (null lst)
+    nil
+    (if (null (cdr lst))
+      t
+      (if (not (= 1 (abs (- (car lst) (car (cdr lst))))))
+        nil
+        (diffUnRec (cdr lst))
+      )
+    )
+  )
+)
+
+;Exercice 1 rec correction
+(defun diff_rec(liste) (if(not (listp liste)) nil (cond ((null liste) t) ((null (cdr liste)) t) ((= 1 (abs (- (car liste) (cadr liste))))(and t (diff_rec (cdr liste))) (t nil)))))
+
+
+;Exercice 1 Itérative
+(defun diffunit(lst)
+  (do ((i 0 (+ i 1)))
+      ((> i lst) 'done)
+      (format t "~A ~A~%" i (* i i))
+  )
+)
+
+;(format t "~%Bonjour, tapez nombre : ")
+;(diffunit (read))
+
+;Exercice Itérative Correction
+(defun diff2 (liste)
+  (if (or (null liste) (null (cdr liste)))
+    t
+    (do ((tmp liste (cdr tmp)))
+        ((null (cdr tmp)) t)
+        (if (or (not (numberp (car tmp))) (not (numberp (cadr tmp)))) (return-from diff2 nil))
+        (if (not (= (abs (- (car tmp) (cadr tmp))) 1)) (return-from diff2 nil))
+        )
+    )
+)
+
+;Exercice 7 Prédicat equal
+(numberp x)
+(listp x)
+(typep x 'character)
+(typep x 'string)
+(typep x 'symbol)
