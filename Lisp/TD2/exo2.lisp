@@ -109,8 +109,21 @@ nil
 )
 
 ;Exercice 7 Prédicat equal
-(numberp x)
-(listp x)
-(typep x 'character)
-(typep x 'string)
-(typep x 'symbol)
+;(numberp x)
+;(listp x)
+;(typep x 'character)
+;(typep x 'string)
+;(typep x 'symbol)
+(defun mon-equal(x y)
+  (cond ((and (numberp x) (numberp y)) (= x y))
+        ((and (typep x 'character) (typep y 'character)) (char= x y))
+        ((and (typep x 'symbol) (typep x 'symbol)) (eq x y))
+        ((and (typep x 'string) (typep x 'string)) ())
+        ((and (listp x) (listp y)) ())
+
+
+)
+;Finir TD2 + ex3TD3
+
+;(cons elt lst) -> Liste normale
+;(const lst elt) -> Liste imbriquée (attention question au CC)
