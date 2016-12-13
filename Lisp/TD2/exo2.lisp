@@ -120,10 +120,18 @@ nil
         ((and (typep x 'symbol) (typep x 'symbol)) (eq x y))
         ((and (typep x 'string) (typep x 'string)) ())
         ((and (listp x) (listp y)) ())
-
-
 )
-;Finir TD2 + ex3TD3
+
+(defun mon-equal(x y)
+  (cond
+      ((and (numberp x)(numberp y)) (= x y))
+      ((and (characterp x)(characterp y))(char= x y))
+      ((and (stringp x) (stringp y)) (string= x y))
+      ((and (symbolp x)(symbolp y)) (eq x y))
+      ((and (listp x) (listp y) (= (length x)(length y))) (mapcar #' mon-equal x y))
+      (t nil)
+    )
+)
 
 ;(cons elt lst) -> Liste normale
 ;(const lst elt) -> Liste imbriquée (attention question au CC)
